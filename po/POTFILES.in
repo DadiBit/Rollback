@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/it.dadib.Rollback.desktop.in
+data/it.dadib.Rollback.metainfo.xml.in
+data/it.dadib.Rollback.gschema.xml
+src/main.vala
+src/window.vala
+src/window.ui

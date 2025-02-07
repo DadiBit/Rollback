@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=rollback
+Exec=rollback
+Icon=it.dadib.Rollback
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

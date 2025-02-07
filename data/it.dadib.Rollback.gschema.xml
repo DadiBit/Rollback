@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="rollback">
+	<schema id="it.dadib.Rollback" path="/it/dadib/Rollback/">
+	</schema>
+</schemalist>

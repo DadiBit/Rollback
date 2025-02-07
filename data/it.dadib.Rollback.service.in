@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=it.dadib.Rollback
+Exec=@bindir@/rollback --gapplication-service
