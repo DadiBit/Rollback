@@ -1,7 +1,7 @@
 rollback_sources = [
   'main.vala',
   'application.vala',
-  'window.vala',
+  'ui/window.vala',
 ]
 
 rollback_deps = [

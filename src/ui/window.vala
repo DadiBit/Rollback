@@ -18,12 +18,14 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/it/dadib/Rollback/window.ui")]
+[GtkTemplate (ui = "/it/dadib/Rollback/ui/window.ui")]
 public class Rollback.Window : Adw.ApplicationWindow {
     [GtkChild]
     private unowned Gtk.Label label;
 
     public Window (Gtk.Application app) {
         Object (application: app);
+
+        label.label = @"id: $(app.application_id)";
     }
 }

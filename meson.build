@@ -8,6 +8,12 @@ i18n = import('i18n')
 gnome = import('gnome')
 valac = meson.get_compiler('vala')
 
+add_global_arguments(['-Wall',
+                      '-Wno-pointer-sign',
+                      '-Wno-unused',
+                      '-Wno-incompatible-pointer-types',
+                      '-Wno-discarded-qualifiers'],
+                     language: 'c')
 
 srcdir = meson.project_source_root() / 'src'
 
