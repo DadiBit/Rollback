@@ -6,31 +6,244 @@
     <property name="title" translatable="yes">Rollback</property>
     <property name="default-width">800</property>
     <property name="default-height">600</property>
+    <style>
+      <class name="devel"/>
+    </style>
     <property name="content">
-      <object class="AdwToolbarView">
-        <child type="top">
-          <object class="AdwHeaderBar">
-            <child type="end">
-              <object class="GtkMenuButton">
-                <property name="primary">True</property>
-                <property name="icon-name">open-menu-symbolic</property>
-                <property name="tooltip-text" translatable="yes">Main Menu</property>
-                <property name="menu-model">primary_menu</property>
+      <object class="AdwNavigationView">
+        <child>
+          <object class="AdwNavigationPage">
+            <property name="title" translatable="yes">Rollback</property>
+            <property name="child">
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar">
+                    <child type="start">
+                      <object class="GtkButton" id="create_config_header_button">
+                        <property name="icon-name">list-add-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Create New Configuration</property>
+                      </object>
+                    </child>
+                    <child type="end">
+                      <object class="GtkMenuButton">
+                        <property name="primary">True</property>
+                        <property name="icon-name">open-menu-symbolic</property>
+                        <property name="tooltip-text" translatable="yes">Main Menu</property>
+                        <property name="menu-model">primary_menu</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <property name="content">
+                  <object class="AdwViewStack" id="stack">
+                    <child>
+                      <object class="AdwViewStackPage" id="config_list_page">
+                        <property name="child">
+                          <object class="GtkScrolledWindow">
+                            <property name="child">
+                              <object class="AdwClamp">
+                                <property name="child">
+                                  <object class="GtkBox">
+                                    <property name="orientation">vertical</property>
+                                    <property name="margin-top">24</property>
+                                    <property name="margin-bottom">24</property>
+                                    <property name="margin-start">12</property>
+                                    <property name="margin-end">12</property>
+                                    <property name="spacing">24</property>
+                                    <child>
+                                      <object class="GtkListBox">
+                                        <property name="selection-mode">none</property>
+                                        <style>
+                                          <class name="boxed-list"/>
+                                        </style>
+                                        <child>
+                                          <object class="AdwActionRow">
+                                            <property name="title" translatable="yes">Data</property>
+                                            <property name="action-name">navigation.push</property>
+                                            <property name="action-target">'data-config-page'</property>
+                                            <property name="activatable-widget">data-config-page</property>
+                                            <child type="prefix">
+                                              <object class="GtkImage">
+                                                <property name="icon-name">drive-harddisk-symbolic</property>
+                                              </object>
+                                            </child>
+                                            <child type="suffix">
+                                              <object class="GtkImage">
+                                                <property name="icon-name">go-next-symbolic</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="AdwActionRow">
+                                            <property name="title" translatable="yes">Users</property>
+                                            <child type="prefix">
+                                              <object class="GtkImage">
+                                                <property name="icon-name">system-users-symbolic</property>
+                                              </object>
+                                            </child>
+                                            <child type="suffix">
+                                              <object class="GtkImage">
+                                                <property name="icon-name">go-next-symbolic</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="AdwActionRow">
+                                            <property name="title" translatable="yes">System</property>
+                                            <child type="prefix">
+                                              <object class="GtkImage">
+                                                <property name="icon-name">penguin-alt-symbolic</property>
+                                              </object>
+                                            </child>
+                                            <child type="suffix">
+                                              <object class="GtkImage">
+                                                <property name="icon-name">go-next-symbolic</property>
+                                              </object>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </property>
+                              </object>
+                            </property>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="AdwViewStackPage" id="empty_config_list_page">
+                        <property name="child">
+                          <object class="AdwStatusPage">
+                            <property name="title">No Configuration Found</property>
+                            <property name="description">Try creating a configuration</property>
+                            <child>
+                              <object class="AdwBin">
+                                <property name="halign">center</property>
+                                <property name="child">
+                                  <object class="GtkButton" id="create_config_empty_list_button">
+                                    <property name="label">Add Configuration</property>
+                                    <style>
+                                      <class name="suggested-action"/>
+                                      <class name="pill"/>
+                                    </style>
+                                  </object>
+                                </property>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </child>
+                  </object>
+                </property>
               </object>
-            </child>
+            </property>
           </object>
         </child>
-        <property name="content">
-          <object class="GtkLabel" id="label">
-            <property name="label" translatable="yes">Hello, World!</property>
-            <style>
-              <class name="title-1"/>
-            </style>
+        <child>
+          <object class="AdwNavigationPage" id="data-config-page">
+            <property name="title" translatable="yes">Data</property>
+            <property name="tag">data-config-page</property>
+            <property name="child">
+              <object class="AdwToolbarView">
+                <child type="top">
+                  <object class="AdwHeaderBar"/>
+                </child>
+                <property name="content">
+                  <object class="GtkScrolledWindow">
+                    <property name="child">
+                      <object class="AdwClamp">
+                        <property name="child">
+                          <object class="GtkBox">
+                            <property name="orientation">vertical</property>
+                            <property name="margin-top">24</property>
+                            <property name="margin-bottom">24</property>
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
+                            <property name="spacing">24</property>
+                            <child>
+                              <object class="GtkListBox">
+                                <property name="selection-mode">none</property>
+                                <style>
+                                  <class name="boxed-list"/>
+                                </style>
+                                <child>
+                                  <object class="AdwActionRow">
+                                    <property name="title" translatable="yes">37 minutes ago</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow">
+                                    <property name="title" translatable="yes">One hour ago</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="AdwActionRow">
+                                    <property name="title" translatable="yes">Feb 1 2025, 9:00</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </property>
+                      </object>
+                    </property>
+                  </object>
+                </property>
+              </object>
+            </property>
           </object>
-        </property>
+        </child>
       </object>
     </property>
   </template>
+  <object class="AdwDialog" id="create_new_config_dialog">
+    <property name="title" translatable="yes">Create New Configuration</property>
+    <property name="content-width">800</property>
+    <property name="content-height">600</property>
+    <child>
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
+        </child>
+        <property name="content">
+          <object class="GtkScrolledWindow">
+            <property name="child">
+              <object class="AdwClamp">
+                <property name="child">
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="margin-top">24</property>
+                    <property name="margin-bottom">24</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="spacing">24</property>
+                    <child>
+                      <object class="GtkListBox">
+                        <property name="selection-mode">none</property>
+                        <style>
+                          <class name="boxed-list"/>
+                        </style>
+                        <child>
+                          <object class="AdwEntryRow">
+                            <property name="title" translatable="yes">Configuration Name</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </property>
+          </object>
+        </property>
+      </object>
+    </child>
+  </object>
   <menu id="primary_menu">
     <section>
       <item>

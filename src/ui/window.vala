@@ -1,4 +1,4 @@
-/* window.vala
+/* ui/window.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -21,11 +21,30 @@
 [GtkTemplate (ui = "/it/dadib/Rollback/ui/window.ui")]
 public class Rollback.Window : Adw.ApplicationWindow {
     [GtkChild]
-    private unowned Gtk.Label label;
+    private unowned Gtk.Button create_config_header_button;
+    [GtkChild]
+    private unowned Gtk.Button create_config_empty_list_button;
+
+    [GtkChild]
+    private unowned Adw.Dialog create_new_config_dialog;
 
     public Window (Gtk.Application app) {
         Object (application: app);
-
-        label.label = @"id: $(app.application_id)";
     }
+
+    construct {
+
+        // On header row '+' button click
+        create_config_header_button.clicked.connect (() => {
+            // Open config creation dialog
+            create_new_config_dialog.present (this);
+        });
+
+        // On empty list 'Add Configuration' button click
+        create_config_empty_list_button.clicked.connect (() => {
+            // Open config creation dialog
+            create_new_config_dialog.present (this);
+        });
+    }
+
 }
