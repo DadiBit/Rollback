@@ -10,7 +10,7 @@
       <class name="devel"/>
     </style>
     <property name="content">
-      <object class="AdwNavigationView">
+      <object class="AdwNavigationView" id="navigation_view">
         <child>
           <object class="AdwNavigationPage">
             <property name="title" translatable="yes">Rollback</property>
@@ -51,29 +51,11 @@
                                     <property name="margin-end">12</property>
                                     <property name="spacing">24</property>
                                     <child>
-                                      <object class="GtkListBox">
+                                      <object class="GtkListBox" id="config_list">
                                         <property name="selection-mode">none</property>
                                         <style>
                                           <class name="boxed-list"/>
                                         </style>
-                                        <child>
-                                          <object class="AdwActionRow">
-                                            <property name="title" translatable="yes">Data</property>
-                                            <property name="action-name">navigation.push</property>
-                                            <property name="action-target">'data-config-page'</property>
-                                            <property name="activatable-widget">data-config-page</property>
-                                            <child type="prefix">
-                                              <object class="GtkImage">
-                                                <property name="icon-name">drive-harddisk-symbolic</property>
-                                              </object>
-                                            </child>
-                                            <child type="suffix">
-                                              <object class="GtkImage">
-                                                <property name="icon-name">go-next-symbolic</property>
-                                              </object>
-                                            </child>
-                                          </object>
-                                        </child>
                                         <child>
                                           <object class="AdwActionRow">
                                             <property name="title" translatable="yes">Users</property>
@@ -145,7 +127,7 @@
           </object>
         </child>
         <child>
-          <object class="AdwNavigationPage" id="data-config-page">
+          <object class="AdwNavigationPage" id="data_config_page">
             <property name="title" translatable="yes">Data</property>
             <property name="tag">data-config-page</property>
             <property name="child">

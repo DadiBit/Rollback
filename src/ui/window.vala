@@ -21,18 +21,38 @@
 [GtkTemplate (ui = "/it/dadib/Rollback/ui/window.ui")]
 public class Rollback.Window : Adw.ApplicationWindow {
     [GtkChild]
+    private unowned Adw.NavigationView navigation_view;
+
+    [GtkChild]
     private unowned Gtk.Button create_config_header_button;
+
     [GtkChild]
     private unowned Gtk.Button create_config_empty_list_button;
 
     [GtkChild]
     private unowned Adw.Dialog create_new_config_dialog;
 
+    [GtkChild]
+    private unowned Gtk.ListBox config_list;
+
+    [GtkChild]
+    private unowned Adw.NavigationPage data_config_page;
+
     public Window (Gtk.Application app) {
         Object (application: app);
     }
 
     construct {
+
+        var config_page = data_config_page;
+        var config_row = new Rollback.ConfigRow("Data", Rollback.ConfigRow.Icon.DEFAULT) {
+            activatable_widget = config_page
+        };
+        config_row.activated.connect (() => {
+            navigation_view.push (config_page);
+        });
+
+        config_list.append (config_row);
 
         // On header row '+' button click
         create_config_header_button.clicked.connect (() => {

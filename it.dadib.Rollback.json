@@ -14,6 +14,7 @@
         "--device=dri",
         "--socket=wayland",
         "--socket=system-bus",
+        "--system-talk-name=org.opensuse.Snapper",
         "--system-talk-name=org.freedesktop.hostname1"
     ],
     "build-options" : {
