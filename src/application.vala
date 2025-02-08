@@ -19,6 +19,8 @@
  */
 
 public class Rollback.Application : Adw.Application {
+    bool immutable_root = false;
+
     public Application () {
         Object (
             application_id: "it.dadib.Rollback",
@@ -34,6 +36,15 @@ public class Rollback.Application : Adw.Application {
         };
         this.add_action_entries (action_entries, this);
         this.set_accels_for_action ("app.quit", {"<primary>q"});
+
+        try {
+            var host = new Host ();
+            if (host.is_root_immutable()) {
+                this.immutable_root = true;
+            }
+        } catch (IOError e) {
+            warning (e.message);
+        }
     }
 
     public override void activate () {
