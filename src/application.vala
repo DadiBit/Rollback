@@ -19,7 +19,7 @@
  */
 
 public class Rollback.Application : Adw.Application {
-    bool immutable_root = false;
+    bool immutable_distro = false;
 
     public Application () {
         Object (
@@ -38,11 +38,21 @@ public class Rollback.Application : Adw.Application {
         this.set_accels_for_action ("app.quit", {"<primary>q"});
 
         try {
-            var host = new Host ();
-            if (host.is_root_immutable()) {
-                this.immutable_root = true;
+            var system = new System ();
+            this.immutable_distro = system.immutable_distro;
+        } catch (IOError e) {
+            warning (@"Couldn't determine if system is an immutable distro: $(e.message)");
+        }
+
+        try {
+            var disks = new Disks ();
+            foreach (var device in disks.mounted_btrfs_partitions) {
+                // TODO: do btrfs stuff
+                message (device);
             }
         } catch (IOError e) {
+            warning (e.message);
+        } catch (DBusError e) {
             warning (e.message);
         }
     }
@@ -72,3 +82,4 @@ public class Rollback.Application : Adw.Application {
         message ("app.preferences action activated");
     }
 }
+

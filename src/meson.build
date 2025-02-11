@@ -1,7 +1,8 @@
 rollback_sources = [
   'main.vala',
+  'system.vala',
+  'disks.vala',
   'application.vala',
-  'dbus/host.vala',
   'ui/config-row.vala',
   'ui/window.vala',
 ]

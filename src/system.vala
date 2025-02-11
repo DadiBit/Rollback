@@ -1,4 +1,4 @@
-/* dbus/host.vala
+/* system.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -18,26 +18,38 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-class Host : Object {
+public class System {
+
+    /* Hostname - private API */
+
     [DBus (name = "org.freedesktop.hostname1")]
-    public interface Proxy : Object {
-        public abstract string OperatingSystemPrettyName { owned get; }
-        public abstract string KernelRelease { owned get; }
-        public abstract string Hostname { owned get; }
+    private interface Hostname : Object {
+        internal abstract string OperatingSystemPrettyName { owned get; }
+        internal abstract string KernelRelease { owned get; }
+        internal abstract string Hostname { owned get; }
+    }
+    private Hostname? _hostname = null;
+
+    /* Hostname - public API */
+
+    public bool immutable_distro {
+        get { return "Silverblue" in _hostname.OperatingSystemPrettyName; }
     }
 
-    private Proxy proxy;
+    public string hostname {
+        owned get { return _hostname.Hostname; }
+    }
 
-    public Host () throws IOError {
-        this.proxy = Bus.get_proxy_sync(
+    /* Constructor that can throw, since connection is not guaranteed */
+    public System () throws IOError {
+
+        // OS, kernel, hostname
+        _hostname = Bus.get_proxy_sync<Hostname>(
             BusType.SYSTEM,
             "org.freedesktop.hostname1",
             "/org/freedesktop/hostname1"
         );
-    }
 
-    public bool is_root_immutable () throws IOError {
-        return "Silverblue" in proxy.OperatingSystemPrettyName;
     }
 
 }
