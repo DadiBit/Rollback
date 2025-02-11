@@ -5,6 +5,9 @@ A simple GNOME app, bundled as Flatpak, to rollback your data.
 > [!WARNING]
 > This is alpha software: stuff will break.
 
+![Configurations overview](docs/assets/config.png)
+*The configurations overview in the initial window*
+
 ## **What** is this?
 
 This is a graphical application, developed for the GNOME Desktop Environment, that can create a timeline of your btrfs subvolumes.
