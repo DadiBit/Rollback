@@ -32,6 +32,12 @@ You can click the highlighted button, or, if you prefer, the "+" button in the h
 
 This is going to be, usually, one of the following:
 
+ - `/` is the system root, which contains whatever is not in a dedicated sub-volume
+ - `/home` (or `/var/home`), which contains users data
+ - `/var` contains "variable" data for immutable distros
+
+And, if you're a power user that created more subvolumes during the system installation (like `/var/lib` for app data, or perhaps a dedicated sub-volume for containers at `/var/lib/containers/`), don't worry: the app will list all sub-volumes!
+
 > [!TIP]
 > If running an immutable distro (Vanilla OS 2, Fedora Silverblue etc.) you probably don't want to create a configuration for your root partition, since the rollback is already baked in the system.
 
