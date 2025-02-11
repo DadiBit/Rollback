@@ -5,7 +5,7 @@ A simple GNOME app, bundled as Flatpak, to rollback your data.
 > [!WARNING]
 > This is alpha software: stuff will break.
 
-![Configurations overview](docs/assets/config.png)
+![Configurations overview](docs/assets/config-overview.png)
 *The configurations overview in the initial window*
 
 ## **What** is this?
