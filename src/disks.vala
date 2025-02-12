@@ -74,6 +74,10 @@ public class Disks {
     }
     private CachedDevices<Block> _block = new CachedDevices<Block>();
 
+    private inline bool _is_btrfs (ObjectPath device) throws IOError {
+        return "btrfs" == _block[device].IdType;
+    }
+
     /* Filesystem Proxy */
     [DBus (name = "org.freedesktop.UDisks2.Filesystem")]
     private interface Filesystem : Object {
@@ -81,7 +85,7 @@ public class Disks {
     }
     private CachedDevices<Filesystem> _filesystem = new CachedDevices<Filesystem>();
 
-    private bool _is_mounted (ObjectPath device) throws IOError {
+    private inline bool _is_mounted (ObjectPath device) throws IOError {
         return 0 < _filesystem[device].MountPoints.length[0];
     }
 
@@ -116,7 +120,7 @@ public class Disks {
         foreach (var device in _get_block_devices ()) {
             block = _block[device];
 
-            if ("btrfs" == block.IdType) {
+            if (_is_btrfs (device)) {
                 filesystem = _filesystem[device];
 
                 if (_is_mounted (device)) {
