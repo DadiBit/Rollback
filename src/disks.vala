@@ -74,6 +74,23 @@ public class Disks {
     }
     private CachedDevices<Block> _block = new CachedDevices<Block>();
 
+    private HashTable<string, string> _get_configuration_options (ObjectPath device) {
+        var result = new HashTable<string, string> (str_hash, str_equal);
+        string opts;
+        string pair[2];
+        foreach (var config in _block[device].Configuration) {
+            if ("fstab" == config.type) {
+                opts = config.details["opts"].get_bytestring ();
+                foreach (var opt in opts.split (",")) {
+                    pair = opt.split ("=", 2);
+                    result[pair[0]] = 1 == pair.length
+                    ? "" : pair[1];
+                }
+            }
+        }
+        return result;
+    }
+
     private inline bool _is_btrfs (ObjectPath device) throws IOError {
         return "btrfs" == _block[device].IdType;
     }
