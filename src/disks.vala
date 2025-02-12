@@ -60,7 +60,17 @@ public class Disks {
     /* Block Proxy */
     [DBus (name = "org.freedesktop.UDisks2.Block")]
     private interface Block : Object {
+        internal struct ConfigurationItem {
+            public string type;
+            public HashTable<string, Variant> details;
+        }
+        internal abstract ConfigurationItem[] Configuration { owned get; } // fstab/crypttab
         internal abstract string IdType { owned get; } // btrfs, ext4 etc
+        internal abstract void UpdateConfigurationItem (
+            ConfigurationItem old_item,
+            ConfigurationItem new_item,
+            HashTable<string, Variant> options = new HashTable<string, Variant>(str_hash, str_equal)
+        ) throws DBusError, IOError;
     }
     private CachedDevices<Block> _block = new CachedDevices<Block>();
 
