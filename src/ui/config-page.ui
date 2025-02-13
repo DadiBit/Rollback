@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="RollbackConfigPage" parent="AdwNavigationPage">
+    <property name="child">
+      <object class="AdwToolbarView">
+        <child type="top">
+          <object class="AdwHeaderBar"/>
+        </child>
+        <property name="content">
+          <object class="GtkScrolledWindow">
+            <property name="child">
+              <object class="AdwClamp">
+                <property name="child">
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="margin-top">24</property>
+                    <property name="margin-bottom">24</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="spacing">24</property>
+                    <child>
+                      <object class="GtkListBox">
+                        <property name="selection-mode">none</property>
+                        <style>
+                          <class name="boxed-list"/>
+                        </style>
+                        <child>
+                          <object class="AdwActionRow">
+                            <property name="title" translatable="yes">37 minutes ago</property>
+                            <property name="activatable-widget">activatable_toggle</property>
+                            <child type="suffix">
+                              <object class="GtkMenuButton" id="activatable_toggle">
+                                <property name="icon-name">open-menu-symbolic</property>
+                                <property name="valign">3</property>
+                                <property name="menu-model">snapshot_menu</property>
+                                <style>
+                                  <class name="flat"/>
+                                </style>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow">
+                            <property name="title" translatable="yes">One hour ago</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="AdwActionRow">
+                            <property name="title" translatable="yes">Feb 1 2025, 9:00</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </property>
+          </object>
+        </property>
+      </object>
+    </property>
+  </template>
+  <menu id="snapshot_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Rollback</attribute>
+        <attribute name="action">snapshot.rollback</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Browse</attribute>
+        <attribute name="action">snapshot.browse</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Delete</attribute>
+        <attribute name="action">snapshot.delete</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

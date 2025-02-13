@@ -1,4 +1,4 @@
-/* ui/config-row.vala
+/* ui/snapshot-row.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -18,26 +18,6 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/it/dadib/Rollback/ui/config-row.ui")]
-public class Rollback.ConfigRow : Adw.ActionRow {
-
-    [GtkChild]
-    private unowned Gtk.Image image;
-
-    public ConfigRow (Rollback.Config config) {
-        Object (title: config.title);
-        switch (config.kind) {
-            case Rollback.Config.Kind.USERS:
-                image.icon_name = "system-users-symbolic";
-                break;
-            case Rollback.Config.Kind.SYSTEM:
-                image.icon_name = "penguin-alt-symbolic";
-                break;
-            case Rollback.Config.Kind.GENERIC:
-            default:
-                image.icon_name = "drive-harddisk-symbolic";
-                break;
-        }
-    }
-
+[GtkTemplate (ui = "/it/dadib/Rollback/ui/snapshot-row.ui")]
+public class Rollback.SnapshotRow : Adw.ActionRow {
 }

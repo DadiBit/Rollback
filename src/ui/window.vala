@@ -35,24 +35,21 @@ public class Rollback.Window : Adw.ApplicationWindow {
     [GtkChild]
     private unowned Gtk.ListBox config_list;
 
-    [GtkChild]
-    private unowned Adw.NavigationPage data_config_page;
-
     public Window (Gtk.Application app) {
         Object (application: app);
     }
 
     construct {
 
-        var config_page = data_config_page;
-        var config_row = new Rollback.ConfigRow("Data", Rollback.ConfigRow.Icon.DEFAULT) {
+        /*var config_page = data_config_page;
+        var config_row = new Rollback.ConfigRow("Data") {
             activatable_widget = config_page
         };
         config_row.activated.connect (() => {
             navigation_view.push (config_page);
         });
 
-        config_list.append (config_row);
+        config_list.append (config_row);*/
 
         // On header row '+' button click
         create_config_header_button.clicked.connect (() => {
@@ -65,6 +62,23 @@ public class Rollback.Window : Adw.ApplicationWindow {
             // Open config creation dialog
             create_new_config_dialog.present (this);
         });
+
+        // List configurations
+        Rollback.Config[] configs = {
+            new Rollback.Config (
+                (ObjectPath) "/org/freedesktop/UDisks2/block_devices/nvme0n1p3",
+                "System",
+                Rollback.Config.Kind.SYSTEM
+            )
+        };
+        foreach (var config in configs) {
+            navigation_view.add (config.page);
+            config.row.activated.connect (() => {
+                navigation_view.push (config.page);
+            });
+            config_list.append (config.row);
+        }
+
     }
 
 }

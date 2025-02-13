@@ -1,4 +1,4 @@
-/* ui/config-row.vala
+/* config.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -18,26 +18,31 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/it/dadib/Rollback/ui/config-row.ui")]
-public class Rollback.ConfigRow : Adw.ActionRow {
 
-    [GtkChild]
-    private unowned Gtk.Image image;
 
-    public ConfigRow (Rollback.Config config) {
-        Object (title: config.title);
-        switch (config.kind) {
-            case Rollback.Config.Kind.USERS:
-                image.icon_name = "system-users-symbolic";
-                break;
-            case Rollback.Config.Kind.SYSTEM:
-                image.icon_name = "penguin-alt-symbolic";
-                break;
-            case Rollback.Config.Kind.GENERIC:
-            default:
-                image.icon_name = "drive-harddisk-symbolic";
-                break;
-        }
+public class Rollback.Config : Object {
+
+    public enum Kind {
+        GENERIC = 0,
+        USERS = 1,
+        SYSTEM = 2
+    }
+
+    public Rollback.ConfigPage page;
+    public Rollback.ConfigRow row;
+
+    public ObjectPath device;
+    public string title;
+    public Kind kind;
+
+    public Config (ObjectPath device, string title, Kind kind) {
+        this.device = device;
+        this.title = title;
+        this.kind = kind;
+        this.page = new Rollback.ConfigPage (this);
+        this.row = new Rollback.ConfigRow (this) {
+            activatable_widget = this.page,
+        };
     }
 
 }
