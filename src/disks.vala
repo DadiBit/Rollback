@@ -60,36 +60,9 @@ public class Disks {
     /* Block Proxy */
     [DBus (name = "org.freedesktop.UDisks2.Block")]
     private interface Block : Object {
-        internal struct ConfigurationItem {
-            public string type;
-            public HashTable<string, Variant> details;
-        }
-        internal abstract ConfigurationItem[] Configuration { owned get; } // fstab/crypttab
         internal abstract string IdType { owned get; } // btrfs, ext4 etc
-        internal abstract void UpdateConfigurationItem (
-            ConfigurationItem old_item,
-            ConfigurationItem new_item,
-            HashTable<string, Variant> options = new HashTable<string, Variant>(str_hash, str_equal)
-        ) throws DBusError, IOError;
     }
     private CachedDevices<Block> _block = new CachedDevices<Block>();
-
-    private HashTable<string, string> _get_configuration_options (ObjectPath device) {
-        var result = new HashTable<string, string> (str_hash, str_equal);
-        string opts;
-        string pair[2];
-        foreach (var config in _block[device].Configuration) {
-            if ("fstab" == config.type) {
-                opts = config.details["opts"].get_bytestring ();
-                foreach (var opt in opts.split (",")) {
-                    pair = opt.split ("=", 2);
-                    result[pair[0]] = 1 == pair.length
-                    ? "" : pair[1];
-                }
-            }
-        }
-        return result;
-    }
 
     private inline bool _is_btrfs (ObjectPath device) throws IOError {
         return "btrfs" == _block[device].IdType;
