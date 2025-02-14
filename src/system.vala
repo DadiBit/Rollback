@@ -20,24 +20,15 @@
 
 public class System {
 
-    /* Hostname - private API */
-
+    /* Hostname */
     [DBus (name = "org.freedesktop.hostname1")]
     private interface Hostname : Object {
         internal abstract string OperatingSystemPrettyName { owned get; }
-        internal abstract string KernelRelease { owned get; }
-        internal abstract string Hostname { owned get; }
     }
     private Hostname? _hostname = null;
 
-    /* Hostname - public API */
-
     public bool immutable_distro {
         get { return "Silverblue" in _hostname.OperatingSystemPrettyName; }
-    }
-
-    public string hostname {
-        owned get { return _hostname.Hostname; }
     }
 
     /* Constructor that can throw, since connection is not guaranteed */
