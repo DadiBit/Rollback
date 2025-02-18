@@ -17,6 +17,8 @@ add_global_arguments(['-Wall',
 
 srcdir = meson.project_source_root() / 'src'
 
+commit = run_command(['git', 'rev-parse', '--short', 'HEAD'], capture : true, check : true).stdout().strip()
+
 config_h = configuration_data()
 config_h.set_quoted('COMMIT', commit)
 config_h.set_quoted('PACKAGE_VERSION', meson.project_version ())

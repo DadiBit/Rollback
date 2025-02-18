@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
   <gresource prefix="/it/dadib/Rollback">
-    <file preprocess="xml-stripblanks">ui/snapshot-row.ui</file>
     <file preprocess="xml-stripblanks">ui/config-page.ui</file>
     <file preprocess="xml-stripblanks">ui/config-row.ui</file>
     <file preprocess="xml-stripblanks">ui/window.ui</file>

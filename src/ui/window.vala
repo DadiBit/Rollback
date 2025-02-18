@@ -21,64 +21,28 @@
 [GtkTemplate (ui = "/it/dadib/Rollback/ui/window.ui")]
 public class Rollback.Window : Adw.ApplicationWindow {
     [GtkChild]
-    private unowned Adw.NavigationView navigation_view;
+    private unowned Adw.NavigationView navigation;
 
     [GtkChild]
-    private unowned Gtk.Button create_config_header_button;
-
-    [GtkChild]
-    private unowned Gtk.Button create_config_empty_list_button;
-
-    [GtkChild]
-    private unowned Adw.Dialog create_new_config_dialog;
-
-    [GtkChild]
-    private unowned Gtk.ListBox config_list;
+    private unowned Gtk.ListBox configurations;
 
     public Window (Gtk.Application app) {
         Object (application: app);
     }
 
     construct {
+        var model = new ConfigList ();
+        configurations.bind_model (model, item => {
+            var page = new ConfigPage ((ConfigObject) item);
+            navigation.add (page);
 
-        /*var config_page = data_config_page;
-        var config_row = new Rollback.ConfigRow("Data") {
-            activatable_widget = config_page
-        };
-        config_row.activated.connect (() => {
-            navigation_view.push (config_page);
-        });
-
-        config_list.append (config_row);*/
-
-        // On header row '+' button click
-        create_config_header_button.clicked.connect (() => {
-            // Open config creation dialog
-            create_new_config_dialog.present (this);
-        });
-
-        // On empty list 'Add Configuration' button click
-        create_config_empty_list_button.clicked.connect (() => {
-            // Open config creation dialog
-            create_new_config_dialog.present (this);
-        });
-
-        // List configurations
-        Rollback.Config[] configs = {
-            new Rollback.Config (
-                (ObjectPath) "/org/freedesktop/UDisks2/block_devices/nvme0n1p3",
-                "System",
-                Rollback.Config.Kind.SYSTEM
-            )
-        };
-        foreach (var config in configs) {
-            navigation_view.add (config.page);
-            config.row.activated.connect (() => {
-                navigation_view.push (config.page);
+            var row = new ConfigRow ((ConfigObject) item) {
+                activatable_widget = page,
+            };
+            row.activated.connect (() => {
+                navigation.push (page);
             });
-            config_list.append (config.row);
-        }
-
+            return row;
+        });
     }
-
 }

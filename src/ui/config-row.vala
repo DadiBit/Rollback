@@ -20,24 +20,22 @@
 
 [GtkTemplate (ui = "/it/dadib/Rollback/ui/config-row.ui")]
 public class Rollback.ConfigRow : Adw.ActionRow {
-
     [GtkChild]
-    private unowned Gtk.Image image;
+    private unowned Gtk.Image kind;
 
-    public ConfigRow (Rollback.Config config) {
+    public ConfigRow (ConfigObject config) {
         Object (title: config.title);
         switch (config.kind) {
-            case Rollback.Config.Kind.USERS:
-                image.icon_name = "system-users-symbolic";
+            case ConfigObject.Kind.USERS:
+                kind.icon_name = "system-users-symbolic";
                 break;
-            case Rollback.Config.Kind.SYSTEM:
-                image.icon_name = "penguin-alt-symbolic";
+            case ConfigObject.Kind.SYSTEM:
+                kind.icon_name = "penguin-alt-symbolic";
                 break;
-            case Rollback.Config.Kind.GENERIC:
+            case ConfigObject.Kind.GENERIC:
             default:
-                image.icon_name = "drive-harddisk-symbolic";
+                kind.icon_name = "drive-harddisk-symbolic";
                 break;
         }
     }
-
 }

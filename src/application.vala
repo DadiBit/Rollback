@@ -31,7 +31,6 @@ public class Rollback.Application : Adw.Application {
     construct {
         ActionEntry[] action_entries = {
             { "about", this.on_about_action },
-            { "preferences", this.on_preferences_action },
             { "quit", this.quit }
         };
         this.add_action_entries (action_entries, this);
@@ -42,18 +41,6 @@ public class Rollback.Application : Adw.Application {
             this.immutable_distro = system.immutable_distro;
         } catch (IOError e) {
             warning (@"Couldn't determine if system is an immutable distro: $(e.message)");
-        }
-
-        try {
-            var disks = new Disks ();
-            foreach (var device in disks.mounted_btrfs_partitions) {
-                // TODO: do btrfs stuff
-                message (device);
-            }
-        } catch (IOError e) {
-            warning (e.message);
-        } catch (DBusError e) {
-            warning (e.message);
         }
     }
 
@@ -78,10 +65,6 @@ public class Rollback.Application : Adw.Application {
         };
 
         about.present (this.active_window);
-    }
-
-    private void on_preferences_action () {
-        message ("app.preferences action activated");
     }
 }
 

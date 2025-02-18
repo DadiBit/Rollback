@@ -4,7 +4,7 @@
   <requires lib="Adw" version="1.0"/>
   <template class="RollbackConfigRow" parent="AdwActionRow">
     <child type="prefix">
-      <object class="GtkImage" id="image"/>
+      <object class="GtkImage" id="kind"/>
     </child>
     <child type="suffix">
       <object class="GtkImage">

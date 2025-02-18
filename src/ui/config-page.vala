@@ -20,7 +20,10 @@
 
 [GtkTemplate (ui = "/it/dadib/Rollback/ui/config-page.ui")]
 public class Rollback.ConfigPage : Adw.NavigationPage {
-    public ConfigPage (Rollback.Config config) {
+    [GtkChild]
+    private unowned Gtk.ListBox sequence;
+
+    public ConfigPage (ConfigObject config) {
         Object (title: config.title);
     }
 }
