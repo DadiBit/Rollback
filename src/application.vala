@@ -65,14 +65,16 @@ public class Rollback.Application : Adw.Application {
 
     private void on_about_action () {
         string[] developers = { "Davide Bassi" };
+        string debug_info = @"- commit: $(Config.COMMIT)";
         var about = new Adw.AboutDialog () {
             application_name = "rollback",
             application_icon = "it.dadib.Rollback",
             developer_name = "Davide Bassi",
             translator_credits = _("translator-credits"),
-            version = "0.1.0",
+            version = Config.PACKAGE_VERSION,
             developers = developers,
             copyright = "© 2025 Davide Bassi",
+            debug_info = debug_info,
         };
 
         about.present (this.active_window);
