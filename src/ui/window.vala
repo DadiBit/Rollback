@@ -24,6 +24,15 @@ public class Rollback.Window : Adw.ApplicationWindow {
     private unowned Adw.NavigationView navigation;
 
     [GtkChild]
+    private unowned Adw.ViewStack stack;
+
+    [GtkChild]
+    private unowned Adw.ViewStackPage overview;
+
+    [GtkChild]
+    private unowned Adw.ViewStackPage empty_overview;
+
+    [GtkChild]
     private unowned Gtk.ListBox configurations;
 
     public Window (Gtk.Application app) {

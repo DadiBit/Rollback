@@ -38,7 +38,7 @@
                 <property name="content">
                   <object class="AdwViewStack" id="stack">
                     <child>
-                      <object class="AdwViewStackPage">
+                      <object class="AdwViewStackPage" id="overview">
                         <property name="child">
                           <object class="GtkScrolledWindow">
                             <property name="child">
@@ -68,7 +68,7 @@
                       </object>
                     </child>
                     <child>
-                      <object class="AdwViewStackPage">
+                      <object class="AdwViewStackPage" id="empty_overview">
                         <property name="child">
                           <object class="AdwStatusPage">
                             <property name="title">No Setup Found</property>
