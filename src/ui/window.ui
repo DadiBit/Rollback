@@ -71,7 +71,7 @@
                       <object class="AdwViewStackPage" id="empty_overview">
                         <property name="child">
                           <object class="AdwStatusPage">
-                            <property name="title">No Setup Found</property>
+                            <property name="title">Rollback</property>
                             <property name="icon-name">it.dadib.Rollback</property>
                             <child>
                               <object class="AdwBin">
