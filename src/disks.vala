@@ -81,26 +81,31 @@ public class Disks {
 
     /* Btrfs Filesystem Proxy */
     [DBus (name = "org.freedesktop.UDisks2.Filesystem.BTRFS")]
-    private interface Btrfs : Object {
-        internal struct Subvolume {
-            public int64 id;
-            public int64 parent_id;
+    public interface Btrfs : Object {
+        public struct Subvolume {
+            public uint64 id;
+            public uint64 parent_id;
             public string path;
         }
-        internal struct Subvolumes {
-            public Subvolume[] list;
-            public int count;
-        }
-        internal abstract Subvolumes GetSubvolumes (
+        /* Abusing out field, since nested structs are not supported */
+        internal abstract int32 GetSubvolumes (
             bool snapshots_only,
-            HashTable<string, Variant> options
+            out Subvolume[] subvolumes,
+            HashTable<string, Variant> options = new HashTable<string, Variant>(str_hash, str_equal)
         ) throws DBusError, IOError;
     }
     private CachedDevices<Btrfs> _btrfs = new CachedDevices<Btrfs>();
 
-    /* Returns a list of devices that are BTRFS partitions */
+    /* Returns a list of cached BTRFS block devices */
     public ObjectPath[] mounted_btrfs_partitions {
         owned get { return _btrfs.devices; }
+    }
+
+    /* Returns a list of snapshots subvolumes */
+    public Btrfs.Subvolume[] get_btrfs_snapshots (ObjectPath device) {
+        Btrfs.Subvolume[] subvols;
+        _btrfs[device].GetSubvolumes (true, out subvols);
+        return subvols;
     }
 
     /* Populate all currently available devices Proxies cache */
