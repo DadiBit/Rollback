@@ -19,7 +19,8 @@
  */
 
 public class Rollback.Application : Adw.Application {
-    bool immutable_distro = false;
+    public bool immutable_distro = false;
+    public ConfigList configurations;
 
     public Application () {
         Object (
@@ -42,6 +43,22 @@ public class Rollback.Application : Adw.Application {
         } catch (IOError e) {
             warning (@"Couldn't determine if system is an immutable distro: $(e.message)");
         }
+
+        try {
+            var disks = new Disks ();
+            this.configurations = new ConfigList ();
+        } catch (DBusError e) {
+            error (@"Couldn't create BTRFS UDisks2 DBus interface: $(e.message)");
+        } catch (IOError e) {
+            error (@"Couldn't create UDisks2 DBus interface: $(e.message)");
+        } catch (KeyFileError e) {
+            // TODO: warning and do something to recover
+            error (@"Couldn't parse configuration file: $(e.message)");
+        } catch (FileError e) {
+            // TODO: warning and do something to recover
+            error (@"Couldn't open/read configuration file: $(e.message)");
+        }
+
     }
 
     public override void activate () {
