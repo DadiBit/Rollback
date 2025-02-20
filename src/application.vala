@@ -20,6 +20,7 @@
 
 public class Rollback.Application : Adw.Application {
     public bool immutable_distro = false;
+    public Disks disks;
     public ConfigList configurations;
 
     public Application () {
@@ -45,7 +46,7 @@ public class Rollback.Application : Adw.Application {
         }
 
         try {
-            var disks = new Disks ();
+            this.disks = new Disks ();
             this.configurations = new ConfigList ();
         } catch (DBusError e) {
             error (@"Couldn't create BTRFS UDisks2 DBus interface: $(e.message)");

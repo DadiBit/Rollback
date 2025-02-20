@@ -23,7 +23,7 @@ public class Rollback.ConfigPage : Adw.NavigationPage {
     [GtkChild]
     private unowned Gtk.ListBox sequence;
 
-    public ConfigPage (ConfigObject config) {
+    public ConfigPage (ConfigObject config, Disks disks) {
         Object (title: config.title);
     }
 }

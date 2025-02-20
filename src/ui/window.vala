@@ -35,22 +35,15 @@ public class Rollback.Window : Adw.ApplicationWindow {
     [GtkChild]
     private unowned Gtk.ListBox configurations;
 
-    public Window (Gtk.Application app) {
+    public Window (Rollback.Application app) {
         Object (application: app);
-    }
-
-    construct {
-        var model = new ConfigList ();
-        configurations.bind_model (model, item => {
-            var page = new ConfigPage ((ConfigObject) item);
+        configurations.bind_model (app.configurations, item => {
+            var page = new ConfigPage ((ConfigObject)item, app.disks);
             navigation.add (page);
 
-            var row = new ConfigRow ((ConfigObject) item) {
-                activatable_widget = page,
-            };
-            row.activated.connect (() => {
-                navigation.push (page);
-            });
+            var row = new ConfigRow ((ConfigObject)item);
+            row.activatable_widget = page;
+            row.activated.connect (() => navigation.push (page));
             return row;
         });
     }

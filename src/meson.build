@@ -4,6 +4,7 @@ rollback_sources = [
   'disks.vala',
   'ui/config-page.vala',
   'ui/config-row.vala',
+  'snapshot.vala',
   'config.vala',
   'application.vala',
   'ui/window.vala',
