@@ -2,6 +2,7 @@ rollback_sources = [
   'main.vala',
   'system.vala',
   'disks.vala',
+  'ui/snapshot-row.vala',
   'ui/config-page.vala',
   'ui/config-row.vala',
   'snapshot.vala',

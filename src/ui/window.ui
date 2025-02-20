@@ -36,11 +36,11 @@
                   </object>
                 </child>
                 <property name="content">
-                  <object class="AdwViewStack" id="stack">
+                  <object class="AdwViewStack" id="overview">
                     <child>
-                      <object class="AdwViewStackPage" id="overview">
+                      <object class="AdwViewStackPage">
                         <property name="child">
-                          <object class="GtkScrolledWindow">
+                          <object class="GtkScrolledWindow" id="nonempty">
                             <property name="child">
                               <object class="AdwClamp">
                                 <property name="child">
@@ -68,9 +68,9 @@
                       </object>
                     </child>
                     <child>
-                      <object class="AdwViewStackPage" id="empty_overview">
+                      <object class="AdwViewStackPage">
                         <property name="child">
-                          <object class="AdwStatusPage">
+                          <object class="AdwStatusPage" id="empty">
                             <property name="title">Rollback</property>
                             <property name="icon-name">it.dadib.Rollback</property>
                             <child>

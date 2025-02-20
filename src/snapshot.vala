@@ -29,16 +29,14 @@ public class Rollback.SnapshotObject : Object {
 
 /* A ListModel that manages a device snapshots */
 public class Rollback.SnapshotList : Object, ListModel {
-    private Disks _disks;
-    private ObjectPath _device;
+    private ConfigObject _config;
 
-    public SnapshotList (Disks disks, ObjectPath device) {
-        _disks = disks;
-        _device = device;
+    public SnapshotList (ConfigObject config) {
+        _config = config;
     }
 
     public Object? get_item (uint position) {
-        var subvol = _disks.get_btrfs_snapshots (_device)[position];
+        var subvol = _config.disks.get_btrfs_snapshots (_config.device)[position];
         return new Rollback.SnapshotObject (subvol.path);
     }
 
@@ -47,7 +45,7 @@ public class Rollback.SnapshotList : Object, ListModel {
     }
 
     public uint get_n_items () {
-        return _disks.get_btrfs_snapshots (_device).length;
+        return _config.disks.get_btrfs_snapshots (_config.device).length;
     }
 
 }

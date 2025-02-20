@@ -1,4 +1,4 @@
-/* ui/config-page.vala
+/* ui/snapshot-row.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -18,13 +18,14 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/it/dadib/Rollback/ui/config-page.ui")]
-public class Rollback.ConfigPage : Adw.NavigationPage {
-    [GtkChild]
-    private unowned Gtk.ListBox sequence;
+[GtkTemplate (ui = "/it/dadib/Rollback/ui/snapshot-row.ui")]
+public class Rollback.SnapshotRow : Adw.ActionRow {
+    public SnapshotRow (SnapshotObject snapshot) {
+        Object (title: snapshot.path);
+    }
 
-    public ConfigPage (ConfigObject config) {
-        Object (title: config.title);
-        sequence.bind_model (config.snapshots, SnapshotRow.factory);
+    internal static SnapshotRow factory (Object item) {
+        SnapshotObject snapshot = (SnapshotObject) item;
+        return new SnapshotRow (snapshot);
     }
 }

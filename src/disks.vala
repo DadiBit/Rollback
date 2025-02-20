@@ -103,8 +103,11 @@ public class Disks {
 
     /* Returns a list of snapshots subvolumes */
     public Btrfs.Subvolume[] get_btrfs_snapshots (ObjectPath device) {
-        Btrfs.Subvolume[] subvols;
-        _btrfs[device].GetSubvolumes (true, out subvols);
+        Btrfs.Subvolume[] subvols = {};
+        try {
+            _btrfs[device].GetSubvolumes (true, out subvols);
+        } catch (Error e) {
+        }
         return subvols;
     }
 

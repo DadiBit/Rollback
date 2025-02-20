@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="Adw" version="1.0"/>
+  <template class="RollbackSnapshotRow" parent="AdwActionRow">
+    <child type="suffix">
+      <object class="GtkMenuButton">
+        <property name="icon-name">open-menu-symbolic</property>
+        <property name="valign">3</property>
+        <property name="menu-model">snapshot_menu</property>
+        <style>
+          <class name="flat"/>
+        </style>
+      </object>
+    </child>
+  </template>
+  <menu id="snapshot_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Rollback</attribute>
+        <attribute name="action">snapshot.rollback</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Browse</attribute>
+        <attribute name="action">snapshot.browse</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Delete</attribute>
+        <attribute name="action">snapshot.delete</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>

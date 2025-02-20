@@ -29,26 +29,33 @@ public class Rollback.ConfigObject : Object {
     public string title;
     public Kind kind;
     public ObjectPath device;
+    public Disks disks;
+    public Rollback.SnapshotList snapshots;
 
-    public ConfigObject (string title, Kind kind, ObjectPath device) {
+    public ConfigObject (string title, Kind kind, ObjectPath device, Disks disks) {
         this.title = title;
         this.kind = kind;
         this.device = device;
+        this.disks = disks;
+        this.snapshots = new Rollback.SnapshotList (this);
     }
 }
 
 /* A ListModel that writes changes to the key configuration file (`.desktop`,
  * which is `.ini`-like) designed for the ConfigObject */
 public class Rollback.ConfigList : Object, ListModel {
+    public Disks disks;
     private string _path;
     private KeyFile _file = new KeyFile ();
 
     public ConfigList (
+        Disks disks,
         string filename = "configs.desktop",
         string dirpath = Environment.get_user_config_dir ()
     ) throws KeyFileError, FileError {
         _path = Path.build_filename (dirpath, filename);
         _file.load_from_file (_path, KeyFileFlags.NONE);
+        this.disks = disks;
     }
 
     construct {
@@ -86,7 +93,7 @@ public class Rollback.ConfigList : Object, ListModel {
             var title = _file.get_groups ()[position];
             var kind = _file.get_integer (title, "kind");
             var device = (ObjectPath) _file.get_string (title, "device");
-            return new ConfigObject (title, kind, device);
+            return new ConfigObject (title, kind, device, disks);
         } catch (KeyFileError e) {
             warning ("Couldn't get item %u in config: %s", position, e.message);
             return null;

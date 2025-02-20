@@ -24,27 +24,29 @@ public class Rollback.Window : Adw.ApplicationWindow {
     private unowned Adw.NavigationView navigation;
 
     [GtkChild]
-    private unowned Adw.ViewStack stack;
+    private unowned Adw.ViewStack overview;
 
     [GtkChild]
-    private unowned Adw.ViewStackPage overview;
+    private unowned Gtk.ScrolledWindow nonempty;
 
     [GtkChild]
-    private unowned Adw.ViewStackPage empty_overview;
+    private unowned Adw.StatusPage empty;
 
     [GtkChild]
     private unowned Gtk.ListBox configurations;
 
     public Window (Rollback.Application app) {
         Object (application: app);
-        configurations.bind_model (app.configurations, item => {
-            var page = new ConfigPage ((ConfigObject)item, app.disks);
-            navigation.add (page);
+        configurations.bind_model (app.configurations, item => ConfigRow.factory (item, navigation));
+        app.configurations.items_changed.connect (on_config_count_change);
+        on_config_count_change ();
+    }
 
-            var row = new ConfigRow ((ConfigObject)item);
-            row.activatable_widget = page;
-            row.activated.connect (() => navigation.push (page));
-            return row;
-        });
+    private void on_config_count_change () {
+        var app = (Rollback.Application) this.application;
+        uint count = app.configurations.get_n_items ();
+        overview.visible_child = 0 == count
+            ? (Gtk.Widget) empty
+            : (Gtk.Widget) nonempty;
     }
 }
