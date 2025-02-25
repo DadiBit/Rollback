@@ -39,14 +39,4 @@ public class Rollback.ConfigRow : Adw.ActionRow {
         }
     }
 
-    internal static ConfigRow factory (Object item, Adw.NavigationView navigation) {
-        ConfigObject config = (ConfigObject) item;
-        var page = new ConfigPage (config);
-        var row = new ConfigRow (config);
-        row.activatable_widget = page;
-        row.activated.connect (() => {
-            navigation.push (page);
-        });
-        return row;
-    }
 }

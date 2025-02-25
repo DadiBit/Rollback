@@ -1,4 +1,4 @@
-/* ui/window.vala
+/* data/config-object.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -18,15 +18,19 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/it/dadib/Rollback/ui/window.ui")]
-public class Rollback.Window : Adw.ApplicationWindow {
-    [GtkChild]
-    private unowned Adw.NavigationView navigation;
-
-    public Window (Rollback.Application app) {
-        Object (application: app);
-
-        new Rollback.ConfigListPage (navigation);
+/* An abstract Object representing a configuration */
+public class Rollback.ConfigObject : Object {
+    public enum Kind {
+        GENERIC = 0,
+        USERS = 1,
+        SYSTEM = 2;
     }
 
+    public string title { get; construct; }
+    public Kind kind { get; construct; }
+
+    public ConfigObject (string title, Kind kind) {
+        Object (title: title, kind: kind);
+    }
 }
+

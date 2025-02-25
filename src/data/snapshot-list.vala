@@ -1,4 +1,4 @@
-/* ui/window.vala
+/* data/config-list.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -18,15 +18,28 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/it/dadib/Rollback/ui/window.ui")]
-public class Rollback.Window : Adw.ApplicationWindow {
-    [GtkChild]
-    private unowned Adw.NavigationView navigation;
+/* A ListModel that is synced to a desktop configuration key-value file
+ * containing some config objects. */
+public class Rollback.ConfigList : Object, ListModel {
+    public ConfigList () {
 
-    public Window (Rollback.Application app) {
-        Object (application: app);
-
-        new Rollback.ConfigListPage (navigation);
     }
 
+    public Object? get_item (uint position) {
+        return null;
+    }
+
+    public Type get_item_type () {
+        return typeof (ConfigObject);
+    }
+
+    public uint get_n_items () {
+        return 0;
+    }
+
+    public void append (ConfigObject item) {
+    }
+
+    public void remove (ConfigObject item) {
+    }
 }

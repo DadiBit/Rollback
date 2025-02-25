@@ -1,4 +1,4 @@
-/* system.vala
+/* data/config-object.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -18,29 +18,19 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-public class System {
-
-    /* Hostname */
-    [DBus (name = "org.freedesktop.hostname1")]
-    private interface Hostname : Object {
-        internal abstract string OperatingSystemPrettyName { owned get; }
-    }
-    private Hostname? _hostname = null;
-
-    public bool immutable_distro {
-        get { return "Silverblue" in _hostname.OperatingSystemPrettyName; }
+/* An abstract Object representing a configuration */
+public class Rollback.ConfigObject : Object {
+    public enum Kind {
+        GENERIC = 0,
+        USERS = 1,
+        SYSTEM = 2;
     }
 
-    /* Constructor that can throw, since connection is not guaranteed */
-    public System () throws IOError {
+    public string title { get; construct; }
+    public Kind kind { get; construct; }
 
-        // OS, kernel, hostname
-        _hostname = Bus.get_proxy_sync<Hostname>(
-            BusType.SYSTEM,
-            "org.freedesktop.hostname1",
-            "/org/freedesktop/hostname1"
-        );
-
+    public ConfigObject (string title, Kind kind) {
+        Object (title: title, kind: kind);
     }
-
 }
+

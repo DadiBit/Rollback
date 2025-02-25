@@ -19,8 +19,6 @@
  */
 
 public class Rollback.Application : Adw.Application {
-    public bool immutable_distro = false;
-    public ConfigList configurations;
 
     public Application () {
         Object (
@@ -31,34 +29,12 @@ public class Rollback.Application : Adw.Application {
 
     construct {
         ActionEntry[] action_entries = {
+            { "config-add", this.on_config_add_action },
             { "about", this.on_about_action },
             { "quit", this.quit }
         };
         this.add_action_entries (action_entries, this);
         this.set_accels_for_action ("app.quit", {"<primary>q"});
-
-        try {
-            var system = new System ();
-            this.immutable_distro = system.immutable_distro;
-        } catch (IOError e) {
-            warning (@"Couldn't determine if system is an immutable distro: $(e.message)");
-        }
-
-        try {
-            var disks = new Disks ();
-            this.configurations = new ConfigList (disks);
-        } catch (DBusError e) {
-            error (@"Couldn't create BTRFS UDisks2 DBus interface: $(e.message)");
-        } catch (IOError e) {
-            error (@"Couldn't create UDisks2 DBus interface: $(e.message)");
-        } catch (KeyFileError e) {
-            // TODO: warning and do something to recover
-            error (@"Couldn't parse configuration file: $(e.message)");
-        } catch (FileError e) {
-            // TODO: warning and do something to recover
-            error (@"Couldn't open/read configuration file: $(e.message)");
-        }
-
     }
 
     public override void activate () {
@@ -83,5 +59,10 @@ public class Rollback.Application : Adw.Application {
 
         about.present (this.active_window);
     }
+
+    private void on_config_add_action () {
+        message ("Let's go!");
+    }
+
 }
 

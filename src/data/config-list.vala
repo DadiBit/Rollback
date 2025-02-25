@@ -1,4 +1,4 @@
-/* ui/snapshot.vala
+/* data/config-list.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -18,34 +18,28 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-/* An abstract Object representing a snapshot */
-public class Rollback.SnapshotObject : Object {
-    public string path;
+/* A ListModel that is synced to a desktop configuration key-value file
+ * containing some config objects. */
+public class Rollback.ConfigList : Object, ListModel {
+    public ConfigList () {
 
-    public SnapshotObject (string path) {
-        this.path = path;
-    }
-}
-
-/* A ListModel that manages a device snapshots */
-public class Rollback.SnapshotList : Object, ListModel {
-    private ConfigObject _config;
-
-    public SnapshotList (ConfigObject config) {
-        _config = config;
     }
 
     public Object? get_item (uint position) {
-        var subvol = _config.disks.get_btrfs_snapshots (_config.device)[position];
-        return new Rollback.SnapshotObject (subvol.path);
+        return null;
     }
 
     public Type get_item_type () {
-        return typeof (SnapshotObject);
+        return typeof (ConfigObject);
     }
 
     public uint get_n_items () {
-        return _config.disks.get_btrfs_snapshots (_config.device).length;
+        return 0;
     }
 
+    public void append (ConfigObject item) {
+    }
+
+    public void remove (ConfigObject item) {
+    }
 }
