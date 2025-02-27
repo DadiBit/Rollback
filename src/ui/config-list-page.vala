@@ -81,6 +81,9 @@ public class Rollback.ConfigListPage : Adw.NavigationPage {
     public void on_config_add_action () {
         // TODO
         message ("Hello, world!");
+
+        var item = new ConfigObject ("System", ConfigObject.Kind.SYSTEM);
+        model.add (item);
     }
 
     public void on_config_remove_action (ConfigPage source) {
@@ -88,6 +91,7 @@ public class Rollback.ConfigListPage : Adw.NavigationPage {
         message ("Goodbye, %d!", source.config.kind);
 
         navigation.pop ();
+        model.remove (source.config);
     }
 
     /* This method produces a ConfigRow from an Object. It must be casted to the
