@@ -49,7 +49,9 @@
     <section>
       <item>
         <attribute name="label" translatable="yes">Remove</attribute>
+        <attribute name="action">config.remove</attribute>
       </item>
     </section>
   </menu>
 </interface>
+

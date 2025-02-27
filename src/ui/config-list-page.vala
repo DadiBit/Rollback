@@ -50,6 +50,15 @@ public class Rollback.ConfigListPage : Adw.NavigationPage {
 
     construct {
 
+        // Register config actions group
+        var config_actions = new SimpleActionGroup();
+        this.insert_action_group("config", config_actions);
+
+        // Add the actual action entries
+        config_actions.add_action_entries ({
+            { "add", this.on_config_add_action }
+        }, this);
+
         // Bind the model and factory to the list
         list.bind_model (this.model, this.factory);
         on_model_count_change ();
@@ -69,8 +78,21 @@ public class Rollback.ConfigListPage : Adw.NavigationPage {
             : (Gtk.Widget) nonempty;
     }
 
-    /* This method produces a ConfigRow from an Object (which must be casted to
-     * underlying ListModel type (not retrievable via `get_item_type ()`) */
+    public void on_config_add_action () {
+        // TODO
+        message ("Hello, world!");
+    }
+
+    public void on_config_remove_action (ConfigPage source) {
+        // TODO
+        message ("Goodbye, %d!", source.config.kind);
+
+        navigation.pop ();
+    }
+
+    /* This method produces a ConfigRow from an Object. It must be casted to the
+     * underlying ListModel type (not retrievable via `get_item_type ()`, oddly
+     * enough) */
     private Gtk.Widget factory (Object item) {
         ConfigObject it = (ConfigObject) item;
 
@@ -78,7 +100,10 @@ public class Rollback.ConfigListPage : Adw.NavigationPage {
         var row = new ConfigRow (it);
 
         // Create a new detailed page to open when the row is clicked
-        var page = new Adw.NavigationPage (new Adw.Bin (), it.title);
+        var page = new ConfigPage (it);
+
+        // Connects the children signals to the parent
+        page.config_remove.connect (on_config_remove_action);
 
         // Connect the page to the click action of the row
         row.activatable_widget = page;

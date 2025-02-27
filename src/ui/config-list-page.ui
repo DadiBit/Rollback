@@ -12,6 +12,7 @@
               <object class="GtkButton">
                 <property name="icon-name">list-add-symbolic</property>
                 <property name="tooltip-text" translatable="yes">Create New Configuration</property>
+                <property name="action-name">config.add</property>
               </object>
             </child>
             <child type="end">
@@ -36,8 +37,9 @@
                       <object class="AdwBin">
                         <property name="halign">center</property>
                         <property name="child">
-                          <object class="GtkButton">
+                          <object class="GtkButton" id="button">
                             <property name="label">Create New Configuration</property>
+                            <property name="action-name">config.add</property>
                             <style>
                               <class name="suggested-action"/>
                               <class name="pill"/>

@@ -29,7 +29,6 @@ public class Rollback.Application : Adw.Application {
 
     construct {
         ActionEntry[] action_entries = {
-            { "config-add", this.on_config_add_action },
             { "about", this.on_about_action },
             { "quit", this.quit }
         };
@@ -58,10 +57,6 @@ public class Rollback.Application : Adw.Application {
         };
 
         about.present (this.active_window);
-    }
-
-    private void on_config_add_action () {
-        message ("Let's go!");
     }
 
 }
