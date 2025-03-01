@@ -19,10 +19,18 @@
  */
 
 namespace Rollback {
+
     /* "Map" of config kinds to icons. */
     public const string[] config_kind_icons = {
         "drive-harddisk-symbolic",
         "system-users-symbolic",
         "penguin-alt-symbolic"
+    };
+
+    /* "Map" of config kinds to titles. */
+    public const string[] config_kind_titles = {
+        "Generic",
+        "Users",
+        "System"
     };
 }
