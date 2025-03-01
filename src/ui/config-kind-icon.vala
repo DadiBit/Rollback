@@ -1,4 +1,4 @@
-/* ui/config-row.vala
+/* data/config-kind-icon.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -18,14 +18,11 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/it/dadib/Rollback/ui/config-row.ui")]
-public class Rollback.ConfigRow : Adw.ActionRow {
-    [GtkChild]
-    private unowned Gtk.Image kind;
-
-    public ConfigRow (ConfigObject config) {
-        Object (title: config.title);
-        kind.icon_name = config_kind_icons[config.kind];
-    }
-
+namespace Rollback {
+    /* "Map" of config kinds to icons. */
+    public const string[] config_kind_icons = {
+        "drive-harddisk-symbolic",
+        "system-users-symbolic",
+        "penguin-alt-symbolic"
+    };
 }

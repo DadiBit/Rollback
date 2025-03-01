@@ -1,4 +1,4 @@
-/* ui/config-row.vala
+/* data/config-kind.vala
  *
  * Copyright 2025 Davide Bassi
  *
@@ -18,14 +18,9 @@
  * SPDX-License-Identifier: LGPL-3.0-or-later
  */
 
-[GtkTemplate (ui = "/it/dadib/Rollback/ui/config-row.ui")]
-public class Rollback.ConfigRow : Adw.ActionRow {
-    [GtkChild]
-    private unowned Gtk.Image kind;
-
-    public ConfigRow (ConfigObject config) {
-        Object (title: config.title);
-        kind.icon_name = config_kind_icons[config.kind];
-    }
-
+/* An abstract Object representing a configuration */
+public enum Rollback.ConfigKind {
+    GENERIC = 0,
+    USERS = 1,
+    SYSTEM = 2;
 }

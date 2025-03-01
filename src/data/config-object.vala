@@ -20,16 +20,11 @@
 
 /* An abstract Object representing a configuration */
 public class Rollback.ConfigObject : Object {
-    public enum Kind {
-        GENERIC = 0,
-        USERS = 1,
-        SYSTEM = 2;
-    }
 
     public string title { get; construct; }
-    public Kind kind { get; construct; }
+    public ConfigKind kind { get; construct; }
 
-    public ConfigObject (string title, Kind kind) {
+    public ConfigObject (string title, ConfigKind kind) {
         Object (title: title, kind: kind);
     }
 }

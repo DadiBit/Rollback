@@ -4,11 +4,13 @@ rollback_sources = [
 
   'ui/window.vala',
   'ui/config-list-page.vala',
+  'ui/config-kind-icon.vala',
   'ui/config-row.vala',
   'ui/config-page.vala',
   'ui/snapshot-row.vala',
 
   'data/config-list.vala',
+  'data/config-kind.vala',
   'data/config-object.vala',
 ]
 
