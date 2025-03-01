@@ -79,19 +79,20 @@ public class Rollback.ConfigListPage : Adw.NavigationPage {
     }
 
     public void on_config_add_action () {
-        // TODO
-        message ("Hello, world!");
-
         var item = new ConfigObject ("System", ConfigObject.Kind.SYSTEM);
-        model.add (item);
+        if (model.has (item.title)) {
+            // Prevent user from creating a config with the same title
+        } else if (model.add (item)) {
+
+        } else {
+            // Failed to add a new config
+        }
     }
 
     public void on_config_remove_action (ConfigPage source) {
-        // TODO
-        message ("Goodbye, %d!", source.config.kind);
-
-        navigation.pop ();
-        model.remove (source.config);
+        if (model.remove (source.config)) {
+            navigation.pop ();
+        }
     }
 
     /* This method produces a ConfigRow from an Object. It must be casted to the

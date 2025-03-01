@@ -42,18 +42,20 @@ public class Rollback.ConfigList : Object, ListModel {
             error (@"Couldn't parse config file $(this.path): $(e.message)");
         }
 
-        // Connect items changed signal to method
-        this.items_changed.connect (on_items_changed);
-
     }
 
-    /* Whenever the config changes we ought to save the config page. */
-    private void on_items_changed () {
+    /* Fires the items_changed signal **if** it can save the changes to the file */
+    private bool change_items (uint position, uint removed, uint added) {
         try {
-            config.save_to_file (path);
+            if (config.save_to_file (path)) {
+                // We are sure the config was saved to the file
+                items_changed (position, removed, added);
+                return true;
+            }
         } catch (FileError e) {
             warning (@"Error save config file $(this.path): $(e.message)");
         }
+        return false;
     }
 
     public Object? get_item (uint position) {
@@ -95,24 +97,29 @@ public class Rollback.ConfigList : Object, ListModel {
     }
 
     /* Adds a new config. */
-    public void add (ConfigObject item) {
+    public bool add (ConfigObject item) {
         serialize (item);
         uint position = get_group_position (item.title);
-        items_changed (position, 0, 1);
+        return change_items (position, 0, 1);
     }
 
     /* Updates an existing config. */
-    public void update (ConfigObject item) {
+    public bool update (ConfigObject item) {
         serialize (item);
         uint position = get_group_position (item.title);
-        items_changed (position, 1, 1);
+        return change_items (position, 1, 1);
+    }
+
+    /* Check whether there's already a configuration with the same title. */
+    public bool has (string title) {
+        return config.has_group (title);
     }
 
     /* Removes the config. */
-    public void remove (ConfigObject item) {
+    public bool remove (ConfigObject item) {
 
-        // Silently return if the KeyFile doesn't have the group
-        if (!config.has_group (item.title)) return;
+        // Return without any message if the KeyFile doesn't have the group
+        if (!config.has_group (item.title)) return false;
 
         // Get group position before deletion from KeyFile
         uint position = get_group_position (item.title);
@@ -126,10 +133,11 @@ public class Rollback.ConfigList : Object, ListModel {
             // added in the future (currently the missing group is the only one
             // in GLib source code).
             warning (@"Couldn't remove config $(item.title): $(e.message)");
+            return false;
         }
 
         // Fire signal
-        items_changed (position, 1, 0);
+        return change_items (position, 1, 0);
 
     }
 }
