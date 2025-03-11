@@ -25,7 +25,18 @@ public class Rollback.ConfigRow : Adw.ActionRow {
 
     public ConfigRow (ConfigObject config) {
         Object (title: config.title);
-        kind.icon_name = config_kind_icons[config.kind];
+        switch (config.path) {
+            case "/":
+                kind.icon_name = "penguin-alt-symbolic";
+                break;
+            case "/home":
+            case "/var/home":
+                kind.icon_name = "system-users-symbolic";
+                break;
+            default:
+                kind.icon_name = "drive-harddisk-symbolic";
+                break;
+        }
     }
 
 }

@@ -22,10 +22,10 @@
 public class Rollback.ConfigObject : Object {
 
     public string title { get; construct; }
-    public ConfigKind kind { get; construct; }
+    public string path { get; construct; }
 
-    public ConfigObject (string title, ConfigKind kind) {
-        Object (title: title, kind: kind);
+    public ConfigObject (string title, string path) {
+        Object (title: title, path: path);
     }
 }
 

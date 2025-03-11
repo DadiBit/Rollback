@@ -3,13 +3,30 @@
   <requires lib="gtk" version="4.0"/>
   <requires lib="Adw" version="1.0"/>
   <template class="RollbackSnapshotRow" parent="AdwActionRow">
-    <child type="prefix">
-      <object class="GtkImage" id="kind"/>
-    </child>
     <child type="suffix">
-      <object class="GtkImage">
-        <property name="icon-name">go-next-symbolic</property>
+      <object class="GtkMenuButton">
+        <property name="icon-name">open-menu-symbolic</property>
+        <property name="tooltip-text" translatable="yes">Snapshot Menu</property>
+        <property name="menu-model">snapshot_menu</property>
+        <property name="valign">center</property>
+        <property name="halign">center</property>
+        <style>
+          <class name="flat"/>
+        </style>
       </object>
     </child>
   </template>
+  <menu id="snapshot_menu">
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">_Browse</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Rollback</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Delete</attribute>
+      </item>
+    </section>
+  </menu>
 </interface>

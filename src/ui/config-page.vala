@@ -21,6 +21,9 @@
 [GtkTemplate (ui = "/it/dadib/Rollback/ui/config-page.ui")]
 public class Rollback.ConfigPage : Adw.NavigationPage {
 
+    [GtkChild]
+    private unowned Gtk.ListBox list;
+
     /* This is the underlying config object. The getter is internal to let the
      * parent access it. */
     public ConfigObject config { internal get; construct; }
@@ -39,6 +42,9 @@ public class Rollback.ConfigPage : Adw.NavigationPage {
         config_actions.add_action_entries ({
             { "remove", () => this.config_remove () }
         }, this);
+
+        var row = new SnapshotRow ();
+        list.append (row);
 
     }
 

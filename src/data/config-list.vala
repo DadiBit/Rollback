@@ -61,8 +61,8 @@ public class Rollback.ConfigList : Object, ListModel {
     public Object? get_item (uint position) {
         try {
             var title = config.get_groups ()[position];
-            var kind = config.get_integer (title, "kind");
-            return new ConfigObject (title, kind);
+            var path = config.get_string (title, "path");
+            return new ConfigObject (title, path);
         } catch (KeyFileError e) {
             warning ("Couldn't get item at position %u in config file: %s",
                      position, e.message);
@@ -93,7 +93,7 @@ public class Rollback.ConfigList : Object, ListModel {
      * If the group already exists it updates it, if it doesn't, then it gets
      * added to the KeyFile. */
     private void serialize (ConfigObject item) {
-        config.set_integer (item.title, "kind", item.kind);
+        config.set_string (item.title, "path", item.path);
     }
 
     /* Adds a new config. */

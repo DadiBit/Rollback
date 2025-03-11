@@ -56,7 +56,7 @@ public class Rollback.ConfigListPage : Adw.NavigationPage {
 
         // Add the actual action entries
         config_actions.add_action_entries ({
-            { "add", this.on_config_add_action }
+            { "add", this.on_config_add }
         }, this);
 
         // Bind the model and factory to the list
@@ -71,25 +71,25 @@ public class Rollback.ConfigListPage : Adw.NavigationPage {
 
     /* This method makes sure the empty page is shown whenever the item count
      * changes to 0. */
-    private void on_model_count_change () {
-        uint count = this.model.get_n_items ();
+    private void on_model_count_change (uint position = 0, uint removed = 0, uint added = 0) {
+        uint count = model.get_n_items ();
         view.visible_child = 0 == count
             ? (Gtk.Widget) empty
             : (Gtk.Widget) nonempty;
-    }
 
-    public void on_config_add_action () {
-        var item = new ConfigObject ("System", ConfigObject.Kind.SYSTEM);
-        if (model.has (item.title)) {
-            // Prevent user from creating a config with the same title
-        } else if (model.add (item)) {
-
-        } else {
-            // Failed to add a new config
+        // If we added a brand new entry
+        if (removed == 0 && added == 1) {
+            var row = (ConfigRow) list.get_row_at_index ((int) position);
+            row.activated ();
         }
     }
 
-    public void on_config_remove_action (ConfigPage source) {
+    public void on_config_add () {
+        var config = new ConfigObject ("System", "/");
+        model.add (config);
+    }
+
+    public void on_config_remove (ConfigPage source) {
         if (model.remove (source.config)) {
             navigation.pop ();
         }
@@ -108,7 +108,7 @@ public class Rollback.ConfigListPage : Adw.NavigationPage {
         var page = new ConfigPage (it);
 
         // Connects the children signals to the parent
-        page.config_remove.connect (on_config_remove_action);
+        page.config_remove.connect (on_config_remove);
 
         // Connect the page to the click action of the row
         row.activatable_widget = page;
